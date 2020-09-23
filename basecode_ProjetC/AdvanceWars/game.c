@@ -39,6 +39,64 @@ int LoadSprites(game* p_game, const char* p_path)
 int LoadUnitType(game* p_game, const char* p_path)
 {
 	// TODO :	Chargement des types d'unités
+	if (!p_game)
+		return 0;
+
+	FILE* file = NULL;
+
+	fopen_s(&file, p_path, "r");
+	if (!file)
+		return 0;
+
+	char pathSprite[255];
+	SDL_Rect src, dest;
+	dest.x = dest.y = 0;
+	dest.w = dest.h = 64;
+
+	fscanf_s(file, "%s\n", pathSprite, 255);
+	fscanf_s(file, "%hd %hd\n", &src.w, &src.h);
+
+	char c;
+	int mask, pm;
+
+	for (int i = 0; i < NB_UNIT_TYPE; i++) {
+		p_game->m_unitTab[i] = malloc(sizeof(unitType));
+		fscanf(file, "%c%d%d%d%d\n", &c, &src.x, &src.y, &mask, &pm);
+
+		//TODO: sprite
+		p_game->m_unitTab[i]->m_sprite[0] = LoadSprite(pathSprite, src, dest); //sprite rouge
+		src.y = src.h;
+		p_game->m_unitTab[i]->m_sprite[1] = LoadSprite(pathSprite, src, dest); //sprite bleu
+		
+		p_game->m_unitTab[i]->m_pmMax = pm;
+		p_game->m_unitTab[i]->m_layerMask = mask;
+
+		switch (c) {
+			case 'S':
+				p_game->m_unitTab[i]->m_type = SOLDIER;
+				break;
+			case 'H':
+				p_game->m_unitTab[i]->m_type = HEAVY_SOLDIER;
+				break;
+			case 'T':
+				p_game->m_unitTab[i]->m_type = TANK;
+				break;
+			case 'R':
+				p_game->m_unitTab[i]->m_type = ROCKET_LAUNCHER;
+				break;
+			case 'D':
+				p_game->m_unitTab[i]->m_type = DCA;
+				break;
+			case 'C':
+				p_game->m_unitTab[i]->m_type = COPTER;
+				break;
+			default:
+				p_game->m_unitTab[i]->m_type = -1;
+				break;
+		}
+	}
+
+	fclose(file);
 
 	return 1;
 }
