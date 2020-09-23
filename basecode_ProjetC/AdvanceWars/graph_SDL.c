@@ -20,5 +20,5 @@ void SetNodeSDL(node* p_node, nodeSDL* p_nodeSDL)
 
 nodeSDL* GetNodeSDL(node* p_node)
 {
-	return (nodeSDL*)getNodeData(p_node);
+	return (nodeSDL*)GetNodeData(p_node);
 }

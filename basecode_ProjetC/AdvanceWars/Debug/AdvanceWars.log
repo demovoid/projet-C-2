@@ -1,7 +1,4 @@
-﻿  graph_SDL.c
-MSVCRTD.lib(initializers.obj) : warning LNK4098: conflit entre la bibliothèque par défaut 'msvcrt.lib' et les autres bibliothèques ; utilisez /NODEFAULTLIB:library
-SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' n'a pu être trouvé avec 'SDLmain.lib(SDL_win32_main.obj)' ou sur 'D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\SDLmain.pdb' ; l'objet sera lié sans informations de débogage
-  AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
+﻿  AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libjpeg-8.dll
