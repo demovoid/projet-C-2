@@ -39,6 +39,7 @@ int LoadSprites(game* p_game, const char* p_path)
 int LoadUnitType(game* p_game, const char* p_path)
 {
 	// TODO :	Chargement des types d'unités
+	return 1;
 	if (!p_game)
 		return 0;
 
