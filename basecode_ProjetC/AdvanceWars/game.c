@@ -74,7 +74,7 @@ int LoadUnitType(game* p_game, const char* p_path)
 			p_game->m_unitTab[ind]->m_sprite[0] = LoadSpriteWithImage(pathSprite, p_game->m_unitTab[0]->m_sprite[0]->m_image, src, dest);
 
 		src.y = src.h;
-		p_game->m_unitTab[ind]->m_sprite[0] = LoadSpriteWithImage(pathSprite, p_game->m_unitTab[0]->m_sprite[0]->m_image, src, dest);
+		p_game->m_unitTab[ind]->m_sprite[1] = LoadSpriteWithImage(pathSprite, p_game->m_unitTab[0]->m_sprite[0]->m_image, src, dest);
 		
 		p_game->m_unitTab[ind]->m_pmMax = pm;
 		p_game->m_unitTab[ind]->m_layerMask = mask;
@@ -190,7 +190,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	}
 	index = 0;
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
-	for (i = 0; i < NB_UNIT_TYPE; i++)
+	/*for (i = 0; i < NB_UNIT_TYPE; i++)
 	{
 		if (p_game->m_players[p_game->m_playerTurn]->m_units[i]->m_selected == 1)
 			k = i;
@@ -206,17 +206,14 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			}
 			index++;
 		}
-	}
+	}*/
 
 	// TODO :	Affichage des unit�s
-	for (k = 0; k < 2; k++)
-	{
-		for (l = 0; l < NB_UNIT_TYPE; l++)
-		{
-			if (p_game->m_players[k]->m_units[l]->m_hp > 0)
-			{
-				
-			}
+	for (k = 0; k < 2; k++){
+		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
+			sprite* sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
+			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
+			DrawSprite(p_window, sprit);
 		}
 	}
 	
