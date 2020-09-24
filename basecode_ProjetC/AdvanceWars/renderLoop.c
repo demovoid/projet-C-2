@@ -1,5 +1,5 @@
 #include "renderLoop.h"
-//#include "../GraphLib/include/graph.h"
+#include "graph.h"
 #include "unit.h"
 
 SDL_Surface* init(char* p_windowName, int p_resX, int p_resY)
