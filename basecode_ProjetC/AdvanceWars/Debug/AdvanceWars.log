@@ -1,9 +1,17 @@
 ﻿  game.c
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,12): warning C4101: 'k': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,15): warning C4101: 'l': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(216,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(213,13): warning C4101: 'j': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(258,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(179,12): warning C4101: 'k': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(179,15): warning C4101: 'l': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(218,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(215,13): warning C4101: 'j': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(260,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  graph_SDL.c
+  main.c
+  renderLoop.c
+  sprite.c
+  unit.c
+  Generating Code...
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' was not found with 'SDLmain.lib(SDL_win32_main.obj)' or at 'C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\SDLmain.pdb'; linking object as if no debug info
   AdvanceWars.vcxproj -> C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll

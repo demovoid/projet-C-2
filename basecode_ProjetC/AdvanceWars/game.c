@@ -116,8 +116,8 @@ int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path)
 		j = p_game->m_players[p_idPLayer];
 		j->m_units[i] = malloc(sizeof(unit));
 
-		j->m_units[i]->m_posX = posX;
-		j->m_units[i]->m_posY = posY;
+		j->m_units[i]->m_posX = posX > 0 ? (posX < p_game->m_graph->m_sizeX ? posX : p_game->m_graph->m_sizeX - 1) : 0;
+		j->m_units[i]->m_posY = posY > 0 ? (posY < p_game->m_graph->m_sizeY ? posY : p_game->m_graph->m_sizeY - 1) : 0;
 		j->m_units[i]->m_type = p_game->m_unitTab[typeId];
 
 		//init
@@ -126,6 +126,8 @@ int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path)
 		j->m_units[i]->m_pm = j->m_units[i]->m_type->m_pmMax;
 		j->m_units[i]->m_selected = 0;
 		CalculateMovement(p_game->m_graph, j->m_units[i]);
+
+		SetNodeSDL(GetNodeFromPosition(p_game->m_graph,posX,posY),CreateNodeSDL(j->m_units[i]->m_type->m_sprite[p_idPLayer]));
 	}
 
 	fclose(file);
@@ -254,10 +256,33 @@ void ResetPlayers(game* p_game)
 void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 {
 	float D = 0;
-	int R = 0;
+	int R = 0, i;
 	D = s_damageChart[p_defender->m_type->m_type][p_attacker->m_type->m_type] * p_attacker->m_hp * 0,1;
 	R = s_defenseGround[GetNodeFromPosition(p_game->m_graph, p_defender->m_posX, p_defender->m_posY)->m_layerID];
 	D *= (1 - (R * (0, 1 - (0, 01 * (10 - p_defender->m_hp)))));
 	D /= 10;
 	p_defender->m_hp -= (int)D;
+
+	//vérification de mort
+	if (p_defender->m_hp <= 0) {
+		player* j = p_game->m_players[p_game->m_playerTurn];
+
+		for (i = 0; i < j->m_nbUnit && p_game->m_players[p_game->m_playerTurn]->m_units[i] != p_defender; i++);
+
+		if (i != j->m_nbUnit) {
+			FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
+
+			//destruction de l'image de l'unité dans le noeud
+			node* nod = GetNodeFromPosition(p_game->m_graph, j->m_units[i]->m_posX, j->m_units[i]->m_posY);
+			nodeSDL* nodSDL = GetNodeSDL(nod);
+			free(nodSDL);
+			SetNodeSDL(nod, NULL);
+
+			free(j->m_units[i]);
+			for (; i < j->m_nbUnit - 1; i++)
+				j->m_units[i] = j->m_units[i + 1];
+			j->m_units[i] = NULL;
+		}
+	}
+
 }
