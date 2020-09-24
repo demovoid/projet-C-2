@@ -39,7 +39,6 @@ int LoadSprites(game* p_game, const char* p_path)
 int LoadUnitType(game* p_game, const char* p_path)
 {
 	// TODO :	Chargement des types d'unités
-	return 1;
 	if (!p_game)
 		return 0;
 
@@ -152,7 +151,8 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 {
 	int i, j, k, l;
 	int index = 0;
-
+	int tmp = 0;
+	dijkstraNode** walk = NULL;
 	// Affichage du niveau
 	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
 	{
@@ -163,12 +163,37 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			index++;
 		}
 	}
-
+	index = 0;
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilité de marcher
-	
-	
-	// TODO :	Affichage des unités
+	for (i = 0; i < NB_UNIT_TYPE; i++)
+	{
+		if (p_game->m_players[p_game->m_playerTurn]->m_units[i]->m_selected == 1)
+			k = i;
+	}
+	walk = p_game->m_players[p_game->m_playerTurn]->m_units[k]->m_walkGraph;
+	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
+	{
+		for (j = 0; j < p_game->m_graph->m_sizeX; j++)
+		{
+			if (walk[index]->m_distance < p_game->m_players[p_game->m_playerTurn]->m_units[k]->m_type->m_pmMax)
+			{
 
+			}
+			index++;
+		}
+	}
+
+	// TODO :	Affichage des unités
+	for (k = 0; k < 2; k++)
+	{
+		for (l = 0; l < NB_UNIT_TYPE; l++)
+		{
+			if (p_game->m_players[k]->m_units[l]->m_hp > 0)
+			{
+				
+			}
+		}
+	}
 	
 
 	// Affichage du texte
@@ -202,7 +227,23 @@ unit* GetUnitFromPos(game* p_game, int p_posX, int p_posY, int* p_playerID)
 {
 	// TODO :	Fonction retournant le pointeur vers l'unité à la position passée en paramètre
 	//			p_playerID est une variable retournée s'il existe une unité à la position demandée
+	if (!p_game)
+		return NULL;
 
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < NB_UNIT_TYPE; j++)
+		{
+			if (p_game->m_players[i]->m_units[j]->m_hp > 0)
+			{
+				if (p_game->m_players[i]->m_units[j]->m_posX == p_posX && p_game->m_players[i]->m_units[j]->m_posY == p_posY)
+				{
+					*p_playerID = i;
+					return p_game->m_players[i]->m_units[j];
+				}
+			}
+		}
+	}
 	return NULL;
 }
 

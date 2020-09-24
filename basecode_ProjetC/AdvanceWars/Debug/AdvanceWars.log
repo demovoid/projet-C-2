@@ -1,37 +1,37 @@
 ﻿  game.c
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 2 has type 'Sint16 *'
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): message : consider using '%hd' in the format string
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 3 has type 'Sint16 *'
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): message : consider using '%hd' in the format string
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(153,12): warning C4101: 'k': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(153,15): warning C4101: 'l': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(192,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(189,13): warning C4101: 'j': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(224,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  AdvanceWars.vcxproj -> C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libjpeg-8.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libmikmod-2.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libogg-0.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libpng15-15.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libtiff-5.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbis-0.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbisfile-3.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libwebp-2.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_gfx.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_image.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_mixer.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_ttf.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\smpeg.dll
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\zlib1.dll
-         17 file(s) copied.
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_map.ini
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player1.ini
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player2.ini
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\fireLayer.bmp
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\sprites.ini
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
-  C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
-  7 File(s) copied
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(64,16): warning C4477: 'fscanf' : la chaîne de format '%d' nécessite un argument de type 'int *', mais l'argument variadique 2 est de type 'Sint16 *'
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(64,16): message : utilisez '%hd' dans la chaîne de format
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(64,16): warning C4477: 'fscanf' : la chaîne de format '%d' nécessite un argument de type 'int *', mais l'argument variadique 3 est de type 'Sint16 *'
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(64,16): message : utilisez '%hd' dans la chaîne de format
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(152,12): warning C4101: 'k' : variable locale non référencée
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(152,15): warning C4101: 'l' : variable locale non référencée
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(192,23): warning C4018: '<' : incompatibilité signed/unsigned
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(189,13): warning C4101: 'j' : variable locale non référencée
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(240,98): warning C4244: '=' : conversion de 'int' en 'float', perte possible de données
+  AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libjpeg-8.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libmikmod-2.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libogg-0.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libpng15-15.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libtiff-5.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbis-0.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbisfile-3.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libwebp-2.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_gfx.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_image.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_mixer.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_ttf.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\smpeg.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\zlib1.dll
+         17 fichier(s) copié(s).
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_map.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player1.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player2.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\fireLayer.bmp
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\sprites.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
+  7 fichier(s) copié(s)
