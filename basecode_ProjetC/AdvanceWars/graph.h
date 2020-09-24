@@ -140,8 +140,3 @@ LIB_API void* GetNodeData(node* n);/*!
 									 \param[in] Noeud
 									 \return Renvoie l'adresse
 									 */
-LIB_API void FreeDijkstra(dijkstraNode** p_node, int p_size);/*! 
-									 \brief free le noeud Dijkstra
-									 \param[in] Noeud a free
-									 \param[in] taille du noeud(ligne * colonne)
-									 */

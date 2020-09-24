@@ -126,8 +126,6 @@ int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path)
 		j->m_units[i]->m_pm = j->m_units[i]->m_type->m_pmMax;
 		j->m_units[i]->m_selected = 0;
 		CalculateMovement(p_game->m_graph, j->m_units[i]);
-
-		SetNodeSDL(GetNodeFromPosition(p_game->m_graph,posX,posY),CreateNodeSDL(j->m_units[i]->m_type->m_sprite[p_idPLayer]));
 	}
 
 	fclose(file);
@@ -194,7 +192,6 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	
 	
 	// TODO :	Affichage des unités
-
 	
 
 	// Affichage du texte
@@ -270,14 +267,7 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 		for (i = 0; i < j->m_nbUnit && p_game->m_players[p_game->m_playerTurn]->m_units[i] != p_defender; i++);
 
 		if (i != j->m_nbUnit) {
-			FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
-
-			//destruction de l'image de l'unité dans le noeud
-			node* nod = GetNodeFromPosition(p_game->m_graph, j->m_units[i]->m_posX, j->m_units[i]->m_posY);
-			nodeSDL* nodSDL = GetNodeSDL(nod);
-			free(nodSDL);
-			SetNodeSDL(nod, NULL);
-
+			//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
 			free(j->m_units[i]);
 			for (; i < j->m_nbUnit - 1; i++)
 				j->m_units[i] = j->m_units[i + 1];
