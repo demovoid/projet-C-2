@@ -13,8 +13,8 @@ int LoadSprites(game* p_game, const char* p_path)
 	dest.x = dest.y = 0;
 	dest.w = dest.h = 64;
 
-	//////////
-	//	GROUND LOADING
+	/////////////////////
+	//	GROUND LOADING //
 	/////////////////////
 
 	fscanf_s(file, "%s\n", pathSprite, 255);
@@ -218,5 +218,11 @@ void ResetPlayers(game* p_game)
 
 void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 {
-	// TODO :	Calculer les dégats des l'attaquand sur le défenseur
+	float D = 0;
+	int R = 0;
+	D = s_damageChart[p_defender->m_type->m_type][p_attacker->m_type->m_type] * p_attacker->m_hp * 0,1;
+	R = s_defenseGround[GetNodeFromPosition(p_game->m_graph, p_defender->m_posX, p_defender->m_posY)->m_layerID];
+	D *= (1 - (R * (0, 1 - (0, 01 * (10 - p_defender->m_hp)))));
+	D /= 10;
+	p_defender->m_hp -= (int)D;
 }

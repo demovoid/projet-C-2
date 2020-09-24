@@ -135,7 +135,7 @@ LIB_API void SetNodeData(node* n, void* data);/*!
 									 \param[in] Noeud dans lequel tu veux mettre la donnee
 									 \param[in] Adresse/Donnee
 									 */
-LIB_API void* getNodeData(node* n);/*! 
+LIB_API void* GetNodeData(node* n);/*! 
 									 \brief Recupere la valeur dans le Noeuds
 									 \param[in] Noeud
 									 \return Renvoie l'adresse
