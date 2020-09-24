@@ -39,7 +39,6 @@ int LoadSprites(game* p_game, const char* p_path)
 int LoadUnitType(game* p_game, const char* p_path)
 {
 	// TODO :	Chargement des types d'unités
-	return 1;
 	if (!p_game)
 		return 0;
 
@@ -58,43 +57,28 @@ int LoadUnitType(game* p_game, const char* p_path)
 	fscanf_s(file, "%hd %hd\n", &src.w, &src.h);
 
 	char c;
-	int mask, pm;
+	int mask, pm, ind;
 
 	for (int i = 0; i < NB_UNIT_TYPE; i++) {
-		p_game->m_unitTab[i] = malloc(sizeof(unitType));
-		fscanf(file, "%c%d%d%d%d\n", &c, &src.x, &src.y, &mask, &pm);
+		fscanf_s(file, "%c %hd %hd", &c, 1, &src.x, &src.y);
+		fscanf(file, "%d%d\n", &mask, &pm);
+
+		ind = GetUnitIDFromChar(c);
+
+		p_game->m_unitTab[ind] = malloc(sizeof(unitType));
 
 		//TODO: sprite
-		p_game->m_unitTab[i]->m_sprite[0] = LoadSprite(pathSprite, src, dest); //sprite rouge
-		src.y = src.h;
-		p_game->m_unitTab[i]->m_sprite[1] = LoadSprite(pathSprite, src, dest); //sprite bleu
-		
-		p_game->m_unitTab[i]->m_pmMax = pm;
-		p_game->m_unitTab[i]->m_layerMask = mask;
+		if (i == 0)
+			p_game->m_unitTab[ind]->m_sprite[0] = LoadSprite(pathSprite, src, dest);
+		else 
+			p_game->m_unitTab[ind]->m_sprite[0] = LoadSpriteWithImage(pathSprite, p_game->m_unitTab[0]->m_sprite[0]->m_image, src, dest);
 
-		switch (c) {
-			case 'S':
-				p_game->m_unitTab[i]->m_type = SOLDIER;
-				break;
-			case 'H':
-				p_game->m_unitTab[i]->m_type = HEAVY_SOLDIER;
-				break;
-			case 'T':
-				p_game->m_unitTab[i]->m_type = TANK;
-				break;
-			case 'R':
-				p_game->m_unitTab[i]->m_type = ROCKET_LAUNCHER;
-				break;
-			case 'D':
-				p_game->m_unitTab[i]->m_type = DCA;
-				break;
-			case 'C':
-				p_game->m_unitTab[i]->m_type = COPTER;
-				break;
-			default:
-				p_game->m_unitTab[i]->m_type = -1;
-				break;
-		}
+		src.y = src.h;
+		p_game->m_unitTab[ind]->m_sprite[0] = LoadSpriteWithImage(pathSprite, p_game->m_unitTab[0]->m_sprite[0]->m_image, src, dest);
+		
+		p_game->m_unitTab[ind]->m_pmMax = pm;
+		p_game->m_unitTab[ind]->m_layerMask = mask;
+		p_game->m_unitTab[ind]->m_type = GetUnitIDFromChar(c);
 	}
 
 	fclose(file);
@@ -105,6 +89,46 @@ int LoadUnitType(game* p_game, const char* p_path)
 int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path)
 {
 	// TODO :	Chargement des joueurs
+	if (!p_game)
+		return 0;
+
+	FILE* file = NULL;
+
+	fopen_s(&file, p_path, "r");
+	if (!file)
+		return 0;
+
+	int nbUnit, typeId, posX, posY;
+	player* j = malloc(sizeof(player));
+	if (!j) {
+		fclose(file);
+		return 0;
+	}
+
+	p_game->m_players[p_idPLayer] = j;
+
+	fscanf(file, "%d", &nbUnit);
+	p_game->m_players[p_idPLayer]->m_nbUnit = nbUnit;
+	p_game->m_players[p_idPLayer]->m_units = malloc(sizeof(unit*) * nbUnit);
+
+	for (int i = 0; i < nbUnit; i++) {
+		fscanf(file, "%d%d%d", &typeId, &posX, &posY);
+		j = p_game->m_players[p_idPLayer];
+		j->m_units[i] = malloc(sizeof(unit));
+
+		j->m_units[i]->m_posX = posX;
+		j->m_units[i]->m_posY = posY;
+		j->m_units[i]->m_type = p_game->m_unitTab[typeId];
+
+		//init
+		j->m_units[i]->m_hp = 10;
+		j->m_units[i]->m_canFire = 1;
+		j->m_units[i]->m_pm = j->m_units[i]->m_type->m_pmMax;
+		j->m_units[i]->m_selected = 0;
+		CalculateMovement(p_game->m_graph, j->m_units[i]);
+	}
+
+	fclose(file);
 
 	return 1;
 }
@@ -214,6 +238,16 @@ void CalculateMovement(graph* p_graph, unit* p_unit)
 void ResetPlayers(game* p_game)
 {
 	// TODO :	Initialises les variables des unité en début de tour
+	player* j = NULL;
+	for (int k = 0; k < 2; k++) {
+		j = p_game->m_players[k];
+		for (int i = 0; i < j->m_nbUnit; i++) {
+			j->m_units[i]->m_canFire = 1;
+			j->m_units[i]->m_pm = j->m_units[i]->m_type->m_pmMax;
+			j->m_units[i]->m_selected = 0;
+			CalculateMovement(p_game->m_graph, j->m_units[i]);
+		}
+	}
 
 }
 

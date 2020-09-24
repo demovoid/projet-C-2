@@ -1,13 +1,9 @@
 ﻿  game.c
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 2 has type 'Sint16 *'
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): message : consider using '%hd' in the format string
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 3 has type 'Sint16 *'
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(65,16): message : consider using '%hd' in the format string
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(153,12): warning C4101: 'k': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(153,15): warning C4101: 'l': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(192,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(189,13): warning C4101: 'j': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(224,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,12): warning C4101: 'k': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,15): warning C4101: 'l': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(216,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(213,13): warning C4101: 'j': unreferenced local variable
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(258,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   AdvanceWars.vcxproj -> C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
