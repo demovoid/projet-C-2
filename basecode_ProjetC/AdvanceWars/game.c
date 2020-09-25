@@ -219,12 +219,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 
 	for(int b = 0; b < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; b++){
 		if(sUnit->m_walkGraph[b]->m_distance <= sUnit->m_pm){ //TODO: ajouter la vérification du au blocage par une autre unité (potentiellement dans dijkstra ou calculate movement)
-			//afficher
-			/*
-			sprit = //idk si allocation -> quand free ?
-			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
-			DrawSprite(p_window, sprit);
-			*/
+			//afficher via p_game->m_surfaceWalk
 		}
 	}
 
