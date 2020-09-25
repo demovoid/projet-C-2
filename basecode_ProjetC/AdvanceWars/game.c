@@ -218,7 +218,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	sprite* sprit = NULL;
 
 	for(int b = 0; b < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; b++){
-		if(sUnit->m_walkGraph[b]->m_distance <= sUnit->m_units[a]->m_pm){
+		if(sUnit->m_walkGraph[b]->m_distance <= sUnit->m_units[a]->m_pm){ //TODO: ajouter la vérification du au blocage par une autre unité (potentiellement dans dijkstra ou calculate movement)
 			//afficher
 			/*
 			sprit = //idk si allocation -> quand free ?
