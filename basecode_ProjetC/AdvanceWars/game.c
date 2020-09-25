@@ -208,10 +208,28 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 		}
 	}*/
 
+	player* jp = p_game->m_players[p_game->m_playerTurn];
+	sprite* sprit = NULL;
+
+	for(int a = 0; a < jp->m_nbUnit; a++){
+		if(jp->m_units[a]->m_selected){
+			for(int b = 0; b < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; b++){
+				if(jp->m_units[a]->m_walkGraph[b]->m_distance <= jp->m_units[a]->m_pm){
+					//afficher
+					/*
+					sprit = //idk
+					MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
+					DrawSprite(p_window, sprit);
+					*/
+				}
+			}
+		}
+	}
+
 	// TODO :	Affichage des unit�s
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
-			sprite* sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
+			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
 			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
 			DrawSprite(p_window, sprit);
 		}
