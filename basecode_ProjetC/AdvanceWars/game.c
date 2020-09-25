@@ -191,7 +191,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	index = 0;*/
 
 	for(int i = 0; i < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; i++){
-		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[index]);
+		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[i]);
 		DrawSprite(p_window, n->m_sprite);
 	}
 
