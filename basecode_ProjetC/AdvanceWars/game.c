@@ -179,7 +179,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	int tmp = 0;
 	dijkstraNode** walk = NULL;
 	// Affichage du niveau
-	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
+	/*for (i = 0; i < p_game->m_graph->m_sizeY; i++)
 	{
 		for (j = 0; j < p_game->m_graph->m_sizeX; j++)
 		{
@@ -188,7 +188,13 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			index++;
 		}
 	}
-	index = 0;
+	index = 0;*/
+
+	for(int i = 0; i < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; i++){
+		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[index]);
+		DrawSprite(p_window, n->m_sprite);
+	}
+
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
 	/*for (i = 0; i < NB_UNIT_TYPE; i++)
 	{
@@ -208,21 +214,17 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 		}
 	}*/
 
-	player* jp = p_game->m_players[p_game->m_playerTurn];
+	unit* sUnit = GetSelectedUnit(p_game);
 	sprite* sprit = NULL;
 
-	for(int a = 0; a < jp->m_nbUnit; a++){
-		if(jp->m_units[a]->m_selected){
-			for(int b = 0; b < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; b++){
-				if(jp->m_units[a]->m_walkGraph[b]->m_distance <= jp->m_units[a]->m_pm){
-					//afficher
-					/*
-					sprit = //idk
-					MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
-					DrawSprite(p_window, sprit);
-					*/
-				}
-			}
+	for(int b = 0; b < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; b++){
+		if(sUnit->m_walkGraph[b]->m_distance <= sUnit->m_units[a]->m_pm){
+			//afficher
+			/*
+			sprit = //idk si allocation -> quand free ?
+			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
+			DrawSprite(p_window, sprit);
+			*/
 		}
 	}
 
