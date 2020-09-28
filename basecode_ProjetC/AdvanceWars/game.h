@@ -35,7 +35,7 @@ struct sPlayer
 	unit**		m_units;
 };
 
-game* InitGame();
+game* InitGame(); //TODO: destroy game ? ajout case bleu dans game ? case rouge aussi ?
 int LoadSprites(game* p_game, const char* p_path);
 int LoadUnitType(game * p_game, const char* p_path);
 int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path);

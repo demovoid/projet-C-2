@@ -2,6 +2,8 @@
 
 #include "renderLoop.h"
 
+
+
 int main(int argc, char** argv)
 {
 	SDL_Surface* window = NULL;

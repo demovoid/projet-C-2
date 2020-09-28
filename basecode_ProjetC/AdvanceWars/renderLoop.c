@@ -1,6 +1,56 @@
 #include "renderLoop.h"
-#include "graph.h"
+#include "./include/graph.h"
 #include "unit.h"
+
+void afficherGraphByTID(graph* g) {
+	if (!g || !g->m_data)
+		return;
+
+	char couleur[20];
+
+	for (int i = 0; i < g->m_sizeY; i++) {
+		for (int j = 0; j < g->m_sizeX; j++) {
+			switch (g->m_data[i * g->m_sizeX + j]->m_layerID) {
+			case GRASS_ID:
+				strcpy(couleur, "\x1b[38;2;0;255;127m");
+				break;
+			case FOREST_ID:
+				strcpy(couleur, "\033[0;32;40m");
+				break;
+			case MOUNTAIN_ID:
+				strcpy(couleur, "\033[0;31;40m");
+				break;
+			case CITY_ID:
+				strcpy(couleur, "\033[0;33;40m");
+				break;
+			case ROAD_ID:
+				strcpy(couleur, "\x1b[38;2;255;215;0m");
+				break;
+			case WATER_ID:
+				strcpy(couleur, "\033[0;36;40m");
+				break;
+			default:
+				strcpy(couleur, "");
+			}
+			printf("%s%c\x1b[0m ", couleur, s_defenseGround[g->m_data[i * g->m_sizeX + j]->m_layerID]);
+			//TODO A REMODIFIER
+		}
+		printf("\n");
+	}
+}
+
+void afficherGraphByID(graph* g) {
+	if (!g || !g->m_data)
+		return;
+
+	for (int i = 0; i < g->m_sizeY; i++) {
+		for (int j = 0; j < g->m_sizeX; j++) {
+			printf("%03d ", g->m_data[i * g->m_sizeX + j]->m_id);
+		}
+		printf("\n");
+	}
+}
+
 
 SDL_Surface* init(char* p_windowName, int p_resX, int p_resY)
 {
@@ -45,7 +95,7 @@ int interaction(SDL_Event* p_e, game* p_game)
 	SDL_GetMouseState(&p_game->m_mousePosX, &p_game->m_mousePosY);
 	p_game->m_lclic = 0;
 	p_game->m_rclic = 0;
-
+	printf("X : %4d, Y: %4d\r", p_game->m_mousePosX, p_game->m_mousePosY);
 	while (SDL_PollEvent(p_e))
 	{
 		switch (p_e->type)
@@ -111,14 +161,83 @@ int interaction(SDL_Event* p_e, game* p_game)
 
 int update(game* p_game)
 {
-	if (p_game->m_lclic)
+	if (p_game->m_lclic) //Sélectionner l'unité de son camp
 	{
-		// TODO :	Action(s) suite à un clic gauche
+		int playerattaquantID=-1;
+		//TROUVER LA CASE DU JOUEUR PRESENT SELECTIONNEE
+		unit* attaquant = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerattaquantID);
+		unit* pastattaquant = GetSelectedUnit(p_game);
+		if (attaquant) 
+		{
+			if (!attaquant->m_selected)
+				attaquant->m_selected = 1;
+			else attaquant->m_selected = 0;	
+		}
+		if (pastattaquant)
+		{
+			pastattaquant->m_selected = 0;
+		}
 	}
 
 	if (p_game->m_rclic)
 	{
-		// TODO :	Action(s) suite à un clic droit
+		int playerdefenseID = -1;
+		unit* defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
+		unit* attaquant = GetSelectedUnit(p_game);
+		int dtmp = 0;
+		node* cdefense = NULL;
+		node* cattaque = NULL;
+		node* current = NULL;
+		if(defense) cdefense = GetNodeFromPosition(p_game->m_graph, defense->m_posX, defense->m_posY);
+		if(attaquant) cattaque = GetNodeFromPosition(p_game->m_graph, attaquant->m_posX, attaquant->m_posY);
+		current = GetNodeFromPosition(p_game->m_graph, p_game->m_mousePosX/64, p_game->m_mousePosY/64);
+		if (defense && defense->m_hp > 0) //Attaque
+		{
+			//ARTILLERIE (ROCKET LAUNCHER) 2 a 5 cases
+			//RESTE CASE ADJACENTE
+			
+			if (attaquant->m_type == ROCKET_LAUNCHER)
+			{
+				dtmp = GetManhattanDistance(cdefense,cattaque);
+				if (dtmp <= 5 && dtmp >= 2)
+				{
+					Atttack(p_game, attaquant, defense);
+					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
+					ResetPlayers(p_game);
+				}
+			}
+			else
+			{
+				dtmp = GetManhattanDistance(cdefense, cattaque);
+				if (dtmp == 1)
+				{
+					Atttack(p_game, attaquant, defense);
+					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
+					ResetPlayers(p_game);
+				}
+			}
+
+		}
+		else //Deplacement 
+		{
+			/*afficherGraphByID(p_game->m_graph);
+			afficherGraphByTID(p_game->m_graph);*/
+			if (!GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY,&playerdefenseID))
+			{
+				dtmp = GetManhattanDistance(cattaque, current);
+
+				if (dtmp <= attaquant->m_pm)
+				{
+					attaquant->m_posX = p_game->m_mousePosX/64;
+					attaquant->m_posY = p_game->m_mousePosY/64;
+					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
+					ResetPlayers(p_game);
+				}
+			}
+			else
+				printf("Deplacement impossible");
+		}
+		
 	}
 
 	return 0;

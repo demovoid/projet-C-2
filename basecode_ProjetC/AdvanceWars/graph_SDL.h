@@ -1,5 +1,5 @@
 #pragma once
-#include "./graph.h"
+#include "./include/graph.h"
 #include "sprite.h"
 
 typedef struct sNodeSDL nodeSDL;

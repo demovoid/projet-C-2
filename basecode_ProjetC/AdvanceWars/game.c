@@ -1,5 +1,19 @@
 #include "game.h"
 
+
+
+void afficherDijkstra(dijkstraNode** d, graph* g) {
+	if (!d)
+		return;
+
+	for (int i = 0; i < g->m_sizeY; i++) {
+		for (int j = 0; j < g->m_sizeX; j++)
+			printf("%s%05d\x1b[0m ", d[i * g->m_sizeX + j]->m_distance == INFINITY_DIST ? "\033[0;31;40m" : (d[i * g->m_sizeX + j]->m_distance ? "" : "\033[0;32;40m"), d[i * g->m_sizeX + j]->m_distance);
+		printf("\n");
+	}
+}
+
+
 int LoadSprites(game* p_game, const char* p_path)
 {
 	char pathSprite[255];
@@ -38,7 +52,6 @@ int LoadSprites(game* p_game, const char* p_path)
 
 int LoadUnitType(game* p_game, const char* p_path)
 {
-	// TODO :	Chargement des types d'unit�s
 	if (!p_game)
 		return 0;
 
@@ -88,7 +101,6 @@ int LoadUnitType(game* p_game, const char* p_path)
 
 int LoadPlayer(game* p_game, int p_idPLayer, const char* p_path)
 {
-	// TODO :	Chargement des joueurs
 	if (!p_game)
 		return 0;
 
@@ -188,34 +200,46 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			index++;
 		}
 	}
-	index = 0;
-	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
-	/*for (i = 0; i < NB_UNIT_TYPE; i++)
-	{
-		if (p_game->m_players[p_game->m_playerTurn]->m_units[i]->m_selected == 1)
-			k = i;
+	index = 0; 
+
+	for(int i = 0; i < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; i++){
+		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[i]);
+		DrawSprite(p_window, n->m_sprite);
 	}
-	walk = p_game->m_players[p_game->m_playerTurn]->m_units[k]->m_walkGraph;
-	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
+
+	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
+	
+	SDL_Rect cases;
+	unit* sUnit = GetSelectedUnit(p_game);
+	sprite* sprit = NULL;
+	cases.w = 64;
+	cases.h = 64;
+	
+	if (sUnit)
 	{
-		for (j = 0; j < p_game->m_graph->m_sizeX; j++)
+		for (j = 0; j < p_game->m_graph->m_sizeY; j++)
 		{
-			if (walk[index]->m_distance < p_game->m_players[p_game->m_playerTurn]->m_units[k]->m_type->m_pmMax)
+			for (i = 0; i < p_game->m_graph->m_sizeX; i++)
 			{
-
+				if (sUnit->m_walkGraph[j * p_game->m_graph->m_sizeX + i]->m_distance <= sUnit->m_pm) { 
+					cases.x = i * 64;
+					cases.y = j * 64;
+					SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases);
+				}
 			}
-			index++;
 		}
-	}*/
-
-	// TODO :	Affichage des unit�s
+		//afficherDijkstra(sUnit->m_walkGraph, p_game->m_graph);
+		//TODO remodifier
+		//sUnit->m_selected = 0;
+	}
+	
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
-			sprite* sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
+			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
 			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
 			DrawSprite(p_window, sprit);
 		}
-	}
+	} 
 	
 
 	// Affichage du texte
@@ -247,25 +271,29 @@ unit* GetSelectedUnit(game* p_game)
 
 unit* GetUnitFromPos(game* p_game, int p_posX, int p_posY, int* p_playerID)
 {
-	// TODO :	Fonction retournant le pointeur vers l'unit� � la position pass�e en param�tre
-	//			p_playerID est une variable retourn�e s'il existe une unit� � la position demand�e
 	if (!p_game)
 		return NULL;
 
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < NB_UNIT_TYPE; j++)
+		for (int j = 0; j < p_game->m_players[i]->m_nbUnit; j++)
 		{
+			/*printf("\nUnité[%d][%d].x = %d / ",i,j,p_game->m_players[i]->m_units[j]->m_posX*64);
+			printf("Unité[%d][%d].x = %d\n", i, j, p_game->m_players[i]->m_units[j]->m_posY*64);*/
 			if (p_game->m_players[i]->m_units[j]->m_hp > 0)
 			{
-				if (p_game->m_players[i]->m_units[j]->m_posX == p_posX && p_game->m_players[i]->m_units[j]->m_posY == p_posY)
+				if (p_game->m_players[i]->m_units[j]->m_posX * 64 <= p_posX && p_posX <= (p_game->m_players[i]->m_units[j]->m_posX + 1) * 64)
 				{
-					*p_playerID = i;
-					return p_game->m_players[i]->m_units[j];
+					if (p_game->m_players[i]->m_units[j]->m_posY * 64 <= p_posY && p_posY <= (p_game->m_players[i]->m_units[j]->m_posY + 1) * 64)
+					{
+						*p_playerID = i;
+						return p_game->m_players[i]->m_units[j];
+					}
 				}
 			}
 		}
 	}
+	
 	return NULL;
 }
 
@@ -276,7 +304,6 @@ void CalculateMovement(graph* p_graph, unit* p_unit)
 
 void ResetPlayers(game* p_game)
 {
-	// TODO :	Initialises les variables des unit� en d�but de tour
 	player* j = NULL;
 	for (int k = 0; k < 2; k++) {
 		j = p_game->m_players[k];
@@ -287,19 +314,22 @@ void ResetPlayers(game* p_game)
 			CalculateMovement(p_game->m_graph, j->m_units[i]);
 		}
 	}
-
 }
 
 void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 {
-	float D = 0;
-	int R = 0, i;
-	D = s_damageChart[p_defender->m_type->m_type][p_attacker->m_type->m_type] * p_attacker->m_hp * 0,1;
-	R = s_defenseGround[GetNodeFromPosition(p_game->m_graph, p_defender->m_posX, p_defender->m_posY)->m_layerID];
-	D *= (1 - (R * (0, 1 - (0, 01 * (10 - p_defender->m_hp)))));
-	D /= 10;
+	double D = 0;
+	int i = 0;
+	int damage = s_damageChart[p_defender->m_type->m_type][p_attacker->m_type->m_type];
+	int attaquant_hp = p_attacker->m_hp;
+	int groundDefense = s_defenseGround[GetNodeFromPosition(p_game->m_graph, p_defender->m_posX, p_defender->m_posY)->m_layerID];
+	int defense_hp = p_defender->m_hp;
+	D = (damage * attaquant_hp * 0.1 * (1 - groundDefense * (0.1 - 0.01 * (10 - defense_hp)))) / 10;
 	p_defender->m_hp -= (int)D;
-
+	printf("D : %f / %d", D, (int)D);
+	printf("HP Defenseur = %d\n", p_defender->m_hp);
+	if (p_defender->m_hp <= 0)
+		printf("Mort");
 	//v�rification de mort
 	if (p_defender->m_hp <= 0) {
 		player* j = p_game->m_players[p_game->m_playerTurn];
