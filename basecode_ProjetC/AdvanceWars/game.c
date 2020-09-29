@@ -191,7 +191,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	int tmp = 0;
 	dijkstraNode** walk = NULL;
 	// Affichage du niveau
-	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
+	/*for (i = 0; i < p_game->m_graph->m_sizeY; i++)
 	{
 		for (j = 0; j < p_game->m_graph->m_sizeX; j++)
 		{
@@ -200,7 +200,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			index++;
 		}
 	}
-	index = 0; 
+	index = 0;*/
 
 	for(int i = 0; i < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; i++){
 		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[i]);
@@ -235,13 +235,9 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
-			//if (p_game->m_players[k]->m_units[l]->m_hp > 0)
-			{
-				sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
-				MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX * 64, p_game->m_players[k]->m_units[l]->m_posY * 64);
-				DrawSprite(p_window, sprit);
-
-			}
+			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
+			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
+			DrawSprite(p_window, sprit);
 		}
 	} 
 	
