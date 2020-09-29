@@ -235,9 +235,13 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
-			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
-			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
-			DrawSprite(p_window, sprit);
+			//if (p_game->m_players[k]->m_units[l]->m_hp > 0)
+			{
+				sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
+				MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX * 64, p_game->m_players[k]->m_units[l]->m_posY * 64);
+				DrawSprite(p_window, sprit);
+
+			}
 		}
 	} 
 	
@@ -334,15 +338,18 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 	if (p_defender->m_hp <= 0) {
 		player* j = p_game->m_players[p_game->m_playerTurn];
 
-		for (i = 0; i < j->m_nbUnit && p_game->m_players[p_game->m_playerTurn]->m_units[i] != p_defender; i++);
-
-		if (i != j->m_nbUnit) {
-			//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
-			free(j->m_units[i]);
-			for (; i < j->m_nbUnit - 1; i++)
-				j->m_units[i] = j->m_units[i + 1];
-			j->m_units[i] = NULL;
+		for (i = 0; i < j->m_nbUnit && p_game->m_players[p_game->m_playerTurn]->m_units[i] != p_defender; i++)
+		{
+			if (i != j->m_nbUnit) {
+				//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
+				free(j->m_units[i]);
+				for (; i < j->m_nbUnit - 1; i++)
+					j->m_units[i] = j->m_units[i + 1];
+				j->m_units[i] = NULL;
+				
+			}
 		}
+		j->m_nbUnit--;
 	}
 
 }

@@ -172,11 +172,26 @@ int update(game* p_game)
 			if (!attaquant->m_selected)
 				attaquant->m_selected = 1;
 			else attaquant->m_selected = 0;	
+
+			if (attaquant->m_type == ROCKET_LAUNCHER)
+				printf("\nROCKET_LAUNCHER\n");
+			if (attaquant->m_type == HEAVY_SOLDIER)
+				printf("\nHEAVY_SOLDIER\n");
+			if (attaquant->m_type == TANK)
+				printf("\nTANK\n");
+			if (attaquant->m_type == SOLDIER)
+				printf("\nSOLDIER\n");
+			if (attaquant->m_type == DCA)
+				printf("\nDCA\n");
+			if (attaquant->m_type == COPTER)
+				printf("\nCOPTER\n");
 		}
 		if (pastattaquant)
 		{
 			pastattaquant->m_selected = 0;
 		}
+		
+		
 	}
 
 	if (p_game->m_rclic)
@@ -222,7 +237,8 @@ int update(game* p_game)
 		{
 			/*afficherGraphByID(p_game->m_graph);
 			afficherGraphByTID(p_game->m_graph);*/
-			if (!GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY,&playerdefenseID))
+			defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
+			if (!defense)
 			{
 				dtmp = GetManhattanDistance(cattaque, current);
 
