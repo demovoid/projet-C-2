@@ -206,7 +206,7 @@ int update(game* p_game)
 		if(defense) cdefense = GetNodeFromPosition(p_game->m_graph, defense->m_posX, defense->m_posY);
 		if(attaquant) cattaque = GetNodeFromPosition(p_game->m_graph, attaquant->m_posX, attaquant->m_posY);
 		current = GetNodeFromPosition(p_game->m_graph, p_game->m_mousePosX/64, p_game->m_mousePosY/64);
-		if (defense && defense->m_hp > 0) //Attaque
+		if (defense && defense->m_hp > 0 && playerdefenseID != p_game->m_playerTurn) //Attaque
 		{
 			//ARTILLERIE (ROCKET LAUNCHER) 2 a 5 cases
 			//RESTE CASE ADJACENTE
