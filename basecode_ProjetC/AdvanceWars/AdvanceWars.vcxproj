@@ -121,13 +121,13 @@ xcopy /I /Y "$(SolutionDir)AdvanceWars\data" "$(SolutionDir)bin\data\"</Command>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>../SDL-1.2.15/lib/$(Platform)/*.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../SDL-1.2.15/lib/$(Platform)/*.lib;./Project1.dll;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)SDL-1.2.15\bin\x64\*.dll" "$(SolutionDir)bin\x64\"

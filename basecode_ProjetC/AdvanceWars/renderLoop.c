@@ -1,5 +1,5 @@
 #include "renderLoop.h"
-#include "./include/graph.h"
+#include "include/graph.h"
 #include "unit.h"
 
 void afficherGraphByTID(graph* g) {
@@ -95,7 +95,6 @@ int interaction(SDL_Event* p_e, game* p_game)
 	SDL_GetMouseState(&p_game->m_mousePosX, &p_game->m_mousePosY);
 	p_game->m_lclic = 0;
 	p_game->m_rclic = 0;
-	printf("X : %4d, Y: %4d\r", p_game->m_mousePosX, p_game->m_mousePosY);
 	while (SDL_PollEvent(p_e))
 	{
 		switch (p_e->type)
@@ -163,7 +162,29 @@ int update(game* p_game)
 {
 	if (p_game->m_lclic) //Sélectionner l'unité de son camp
 	{
-		int playerattaquantID=-1;
+		int pID;
+		unit* selec = GetSelectedUnit(p_game);
+		unit* clickt = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &pID);
+
+		if (selec) { //On a une unité selectionnée
+			if(!clickt && selec->m_selected == 1) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en déplacement
+				int dist = selec->m_walkGraph[(p_game->m_mousePosX / 64) + (p_game->m_mousePosY / 64) * p_game->m_graph->m_sizeX]->m_distance;
+				if (dist <= selec->m_pm) {
+					selec->m_posX = p_game->m_mousePosX / 64;
+					selec->m_posY = p_game->m_mousePosY / 64;
+					selec->m_pm -= dist;
+					CalculateMovement(p_game->m_graph, selec);
+				}
+			}
+			selec->m_selected = 0;
+		}
+		else { //Aucune unité selectionnée
+			if (clickt && pID == p_game->m_playerTurn)
+				clickt->m_selected = 1;
+		}
+
+
+		/*int playerattaquantID=-1;
 		//TROUVER LA CASE DU JOUEUR PRESENT SELECTIONNEE
 		unit* attaquant = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerattaquantID);
 		unit* pastattaquant = GetSelectedUnit(p_game);
@@ -171,32 +192,53 @@ int update(game* p_game)
 		{
 			if (!attaquant->m_selected)
 				attaquant->m_selected = 1;
-			else attaquant->m_selected = 0;	
-
-			if (attaquant->m_type == ROCKET_LAUNCHER)
-				printf("\nROCKET_LAUNCHER\n");
-			if (attaquant->m_type == HEAVY_SOLDIER)
-				printf("\nHEAVY_SOLDIER\n");
-			if (attaquant->m_type == TANK)
-				printf("\nTANK\n");
-			if (attaquant->m_type == SOLDIER)
-				printf("\nSOLDIER\n");
-			if (attaquant->m_type == DCA)
-				printf("\nDCA\n");
-			if (attaquant->m_type == COPTER)
-				printf("\nCOPTER\n");
+			else 
+				attaquant->m_selected = 0;	
 		}
 		if (pastattaquant)
 		{
 			pastattaquant->m_selected = 0;
-		}
+		}*/
 		
 		
 	}
 
 	if (p_game->m_rclic)
 	{
-		int playerdefenseID = -1;
+
+		int pID, dist;
+		unit* selec = GetSelectedUnit(p_game);
+		unit* clickt = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &pID);
+
+		if (selec) { //On a une unité selectionnée
+			if (clickt && selec->m_selected == 2) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en attaque
+				//omg j'attaque !
+				if (selec->m_canFire) {
+					node* src = GetNodeFromPosition(p_game->m_graph, selec->m_posX, selec->m_posY);
+					node* dest = GetNodeFromPosition(p_game->m_graph, clickt->m_posX, clickt->m_posY);
+					dist = GetManhattanDistance(src, dest);
+
+					if (selec->m_type->m_type == ROCKET_LAUNCHER) {
+						if (dist >= 2 && dist <= 5) {
+							Atttack(p_game, selec, clickt);
+							selec->m_canFire = 0;
+						}
+					}
+					else
+						if (dist == 1) {
+							Atttack(p_game, selec, clickt);
+							selec->m_canFire = 0;
+						}
+				}
+			}
+			selec->m_selected = 0;
+		}
+		else { //Aucune unité selectionnée
+			if (clickt && pID == p_game->m_playerTurn) 
+				clickt->m_selected = 2;
+		}
+
+		/*int playerdefenseID = -1;
 		unit* defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
 		unit* attaquant = GetSelectedUnit(p_game);
 		int dtmp = 0;
@@ -206,53 +248,55 @@ int update(game* p_game)
 		if(defense) cdefense = GetNodeFromPosition(p_game->m_graph, defense->m_posX, defense->m_posY);
 		if(attaquant) cattaque = GetNodeFromPosition(p_game->m_graph, attaquant->m_posX, attaquant->m_posY);
 		current = GetNodeFromPosition(p_game->m_graph, p_game->m_mousePosX/64, p_game->m_mousePosY/64);
-		if (defense && defense->m_hp > 0 && playerdefenseID != p_game->m_playerTurn) //Attaque
-		{
-			//ARTILLERIE (ROCKET LAUNCHER) 2 a 5 cases
-			//RESTE CASE ADJACENTE
-			
-			if (attaquant->m_type == ROCKET_LAUNCHER)
+		if (attaquant) {
+			if (defense &&  playerdefenseID != p_game->m_playerTurn) //Attaque
 			{
-				dtmp = GetManhattanDistance(cdefense,cattaque);
-				if (dtmp <= 5 && dtmp >= 2)
-				{
-					Atttack(p_game, attaquant, defense);
-					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
-					ResetPlayers(p_game);
+				//ARTILLERIE (ROCKET LAUNCHER) 2 a 5 cases
+				//RESTE CASE ADJACENTE
+				if (attaquant->m_canFire) {
+					if (attaquant->m_type == ROCKET_LAUNCHER)
+					{
+						dtmp = GetManhattanDistance(cdefense, cattaque);
+						if (dtmp <= 5 && dtmp >= 2)
+						{
+							Atttack(p_game, attaquant, defense);
+							attaquant->m_canFire = 0;
+						}
+					}
+					else
+					{
+						dtmp = GetManhattanDistance(cdefense, cattaque);
+						if (dtmp == 1)
+						{
+							Atttack(p_game, attaquant, defense);
+							attaquant->m_canFire = 0;
+						}
+					}
 				}
-			}
-			else
-			{
-				dtmp = GetManhattanDistance(cdefense, cattaque);
-				if (dtmp == 1)
-				{
-					Atttack(p_game, attaquant, defense);
-					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
-					ResetPlayers(p_game);
-				}
-			}
 
-		}
-		else //Deplacement 
-		{
-			/*afficherGraphByID(p_game->m_graph);
-			afficherGraphByTID(p_game->m_graph);*/
-			defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
-			if (!defense)
-			{
-				dtmp = GetManhattanDistance(cattaque, current);
-
-				if (dtmp <= attaquant->m_pm)
-				{
-					attaquant->m_posX = p_game->m_mousePosX/64;
-					attaquant->m_posY = p_game->m_mousePosY/64;
-					p_game->m_playerTurn = (p_game->m_playerTurn + 1) % 2;
-					ResetPlayers(p_game);
-				}
 			}
-			else
-				printf("Deplacement impossible");
-		}
+			else //Deplacement 
+			{
+				/*afficherGraphByID(p_game->m_graph);
+				afficherGraphByTID(p_game->m_graph);*/
+			/*	defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
+				if (!defense)
+				{
+					dtmp = attaquant->m_walkGraph[(p_game->m_mousePosX / 64) + (p_game->m_mousePosY / 64) * p_game->m_graph->m_sizeX]->m_distance;
+
+					if (dtmp <= attaquant->m_pm)
+					{
+						attaquant->m_posX = p_game->m_mousePosX / 64;
+						attaquant->m_posY = p_game->m_mousePosY / 64;
+						attaquant->m_pm -= dtmp;
+						CalculateMovement(p_game->m_graph, attaquant);
+						attaquant->m_selected = 0;
+					}
+				}
+				else
+					printf("Deplacement impossible");
+			}
+		}*/
 		
 	}
 

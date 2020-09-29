@@ -1,0 +1,17 @@
+﻿  game.c
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(260,13): warning C4101: 'j': unreferenced local variable
+  graph_SDL.c
+  main.c
+  renderLoop.c
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(176,44): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(178,42): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(180,33): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(182,36): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(184,32): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(186,35): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(214,44): warning C4047: '==': 'unitType *' differs in levels of indirection from 'int'
+  sprite.c
+  unit.c
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\unit.c(8,12): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+.\Project1.dll : fatal error LNK1107: invalid or corrupt file: cannot read at 0x350

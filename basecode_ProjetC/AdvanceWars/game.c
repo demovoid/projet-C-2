@@ -191,7 +191,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	int tmp = 0;
 	dijkstraNode** walk = NULL;
 	// Affichage du niveau
-	/*for (i = 0; i < p_game->m_graph->m_sizeY; i++)
+	for (i = 0; i < p_game->m_graph->m_sizeY; i++)
 	{
 		for (j = 0; j < p_game->m_graph->m_sizeX; j++)
 		{
@@ -200,12 +200,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			index++;
 		}
 	}
-	index = 0;*/
-
-	for(int i = 0; i < p_game->m_graph->m_sizeY*p_game->m_graph->m_sizeX; i++){
-		nodeSDL* n = GetNodeSDL(p_game->m_graph->m_data[i]);
-		DrawSprite(p_window, n->m_sprite);
-	}
+	index = 0;
 
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
 	
@@ -217,20 +212,42 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	
 	if (sUnit)
 	{
-		for (j = 0; j < p_game->m_graph->m_sizeY; j++)
-		{
-			for (i = 0; i < p_game->m_graph->m_sizeX; i++)
+		if(sUnit->m_selected == 1)
+			for (j = 0; j < p_game->m_graph->m_sizeY; j++)
 			{
-				if (sUnit->m_walkGraph[j * p_game->m_graph->m_sizeX + i]->m_distance <= sUnit->m_pm) { 
-					cases.x = i * 64;
-					cases.y = j * 64;
-					SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases);
+				for (i = 0; i < p_game->m_graph->m_sizeX; i++)
+				{
+					if (sUnit->m_walkGraph[j * p_game->m_graph->m_sizeX + i]->m_distance <= sUnit->m_pm) { 
+						cases.x = i * 64;
+						cases.y = j * 64;
+						SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases);
+					}
 				}
 			}
+		else {
+			int dist;
+			node *src, *dest;
+			for (int i = 0; i < p_game->m_graph->m_sizeY; i++)
+				for (int j = 0; j < p_game->m_graph->m_sizeX; j++) {
+					src = GetNodeFromPosition(p_game->m_graph,sUnit->m_posX,sUnit->m_posY);
+					dest = GetNodeFromPosition(p_game->m_graph, j, i);
+					dist = GetManhattanDistance(src, dest);
+					if (sUnit->m_type->m_type == ROCKET_LAUNCHER){
+						if (dist <= 5 && dist >= 2) {
+							cases.x = j * 64;
+							cases.y = i * 64;
+							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+						}
+					}
+					else {
+						if (dist == 1) {
+							cases.x = j * 64;
+							cases.y = i * 64;
+							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+						}
+					}
+				}
 		}
-		//afficherDijkstra(sUnit->m_walkGraph, p_game->m_graph);
-		//TODO remodifier
-		//sUnit->m_selected = 0;
 	}
 	
 	for (k = 0; k < 2; k++){
@@ -326,26 +343,20 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 	int defense_hp = p_defender->m_hp;
 	D = (damage * attaquant_hp * 0.1 * (1 - groundDefense * (0.1 - 0.01 * (10 - defense_hp)))) / 10;
 	p_defender->m_hp -= (int)D;
-	printf("D : %f / %d", D, (int)D);
-	printf("HP Defenseur = %d\n", p_defender->m_hp);
-	if (p_defender->m_hp <= 0)
-		printf("Mort");
+
 	//v�rification de mort
 	if (p_defender->m_hp <= 0) {
-		player* j = p_game->m_players[p_game->m_playerTurn];
+		player* j = p_game->m_players[1-p_game->m_playerTurn];
 
-		for (i = 0; i < j->m_nbUnit && p_game->m_players[p_game->m_playerTurn]->m_units[i] != p_defender; i++)
-		{
-			if (i != j->m_nbUnit) {
-				//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
-				free(j->m_units[i]);
-				for (; i < j->m_nbUnit - 1; i++)
-					j->m_units[i] = j->m_units[i + 1];
-				j->m_units[i] = NULL;
-				
-			}
+		for (i = 0; i < j->m_nbUnit && j->m_units[i] != p_defender; i++);
+
+		if (i != j->m_nbUnit) {
+			//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
+			free(j->m_units[i]);
+			j->m_nbUnit--;
+			j->m_units[i] = j->m_units[j->m_nbUnit];
+			j->m_units[j->m_nbUnit + 1] = NULL;
 		}
-		j->m_nbUnit--;
 	}
 
 }

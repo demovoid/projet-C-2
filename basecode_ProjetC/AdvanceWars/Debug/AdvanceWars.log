@@ -1,49 +1,6 @@
-<<<<<<< HEAD
-﻿  renderLoop.c
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(176,44): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(178,42): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(180,33): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(182,36): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(184,32): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(186,35): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\renderLoop.c(214,44): warning C4047: '==' : les niveaux d'indirection de 'unitType *' et de 'int' sont différents
-  AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libjpeg-8.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libmikmod-2.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libogg-0.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libpng15-15.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libtiff-5.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbis-0.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbisfile-3.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libwebp-2.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_gfx.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_image.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_mixer.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_ttf.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\smpeg.dll
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\zlib1.dll
-         17 fichier(s) copié(s).
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_map.ini
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player1.ini
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player2.ini
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\fireLayer.bmp
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\sprites.ini
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
-  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
-  7 fichier(s) copié(s)
-=======
 ﻿  game.c
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,9): warning C4101: 'j': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(177,6): warning C4101: 'i': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(259,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(256,13): warning C4101: 'j': unreferenced local variable
-C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(317,98): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  LINK : C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe not found or not built by the last incremental link; performing full link
-MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' was not found with 'SDLmain.lib(SDL_win32_main.obj)' or at 'C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\SDLmain.pdb'; linking object as if no debug info
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(280,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(277,13): warning C4101: 'j': unreferenced local variable
   AdvanceWars.vcxproj -> C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
@@ -71,4 +28,3 @@ SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' was not fou
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
   7 File(s) copied
->>>>>>> thomas
