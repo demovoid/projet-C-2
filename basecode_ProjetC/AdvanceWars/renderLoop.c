@@ -2,56 +2,6 @@
 #include "include/graph.h"
 #include "unit.h"
 
-void afficherGraphByTID(graph* g) {
-	if (!g || !g->m_data)
-		return;
-
-	char couleur[20];
-
-	for (int i = 0; i < g->m_sizeY; i++) {
-		for (int j = 0; j < g->m_sizeX; j++) {
-			switch (g->m_data[i * g->m_sizeX + j]->m_layerID) {
-			case GRASS_ID:
-				strcpy(couleur, "\x1b[38;2;0;255;127m");
-				break;
-			case FOREST_ID:
-				strcpy(couleur, "\033[0;32;40m");
-				break;
-			case MOUNTAIN_ID:
-				strcpy(couleur, "\033[0;31;40m");
-				break;
-			case CITY_ID:
-				strcpy(couleur, "\033[0;33;40m");
-				break;
-			case ROAD_ID:
-				strcpy(couleur, "\x1b[38;2;255;215;0m");
-				break;
-			case WATER_ID:
-				strcpy(couleur, "\033[0;36;40m");
-				break;
-			default:
-				strcpy(couleur, "");
-			}
-			printf("%s%c\x1b[0m ", couleur, s_defenseGround[g->m_data[i * g->m_sizeX + j]->m_layerID]);
-			//TODO A REMODIFIER
-		}
-		printf("\n");
-	}
-}
-
-void afficherGraphByID(graph* g) {
-	if (!g || !g->m_data)
-		return;
-
-	for (int i = 0; i < g->m_sizeY; i++) {
-		for (int j = 0; j < g->m_sizeX; j++) {
-			printf("%03d ", g->m_data[i * g->m_sizeX + j]->m_id);
-		}
-		printf("\n");
-	}
-}
-
-
 SDL_Surface* init(char* p_windowName, int p_resX, int p_resY)
 {
 	SDL_Surface* window;
@@ -158,6 +108,35 @@ int interaction(SDL_Event* p_e, game* p_game)
 	return quit;
 }
 
+static void verifDijkstra(game* p_game, unit* clickt, int ind, int prev) {
+	if (ind < 0 || ind >= p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY || clickt->m_walkGraph[ind]->m_distance == 1 || clickt->m_walkGraph[ind]->m_distance == INFINITY_DIST)
+		return;
+	int dist = INFINITY_DIST;
+	if (ind % p_game->m_graph->m_sizeX + 1 < p_game->m_graph->m_sizeX && clickt->m_walkGraph[ind + 1]->m_distance < dist)
+		dist = clickt->m_walkGraph[ind + 1]->m_distance;
+	if (ind % p_game->m_graph->m_sizeX - 1 >= 0 && clickt->m_walkGraph[ind - 1]->m_distance < dist)
+		dist = clickt->m_walkGraph[ind - 1]->m_distance;
+	if (ind + p_game->m_graph->m_sizeX < p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY && clickt->m_walkGraph[ind + p_game->m_graph->m_sizeX]->m_distance < dist)
+		dist = clickt->m_walkGraph[ind + p_game->m_graph->m_sizeX]->m_distance;
+	if (ind - p_game->m_graph->m_sizeX >= 0 && clickt->m_walkGraph[ind - p_game->m_graph->m_sizeX]->m_distance < dist)
+		dist = clickt->m_walkGraph[ind - p_game->m_graph->m_sizeX]->m_distance;
+
+	int d = clickt->m_walkGraph[ind]->m_distance;
+
+	if (dist + 1 == clickt->m_walkGraph[ind]->m_distance)
+		return;
+
+	clickt->m_walkGraph[ind]->m_distance = dist + 1;
+	if(ind + 1 != prev)
+		verifDijkstra(p_game, clickt, ind + 1, ind);
+	if(ind - 1 != prev)
+		verifDijkstra(p_game, clickt, ind - 1, ind);
+	if(ind + p_game->m_graph->m_sizeX != prev)
+		verifDijkstra(p_game, clickt, ind + p_game->m_graph->m_sizeX, ind);
+	if(ind - p_game->m_graph->m_sizeX != prev)
+		verifDijkstra(p_game, clickt, ind - p_game->m_graph->m_sizeX, ind);
+}
+
 int update(game* p_game)
 {
 	if (p_game->m_lclic) //Sélectionner l'unité de son camp
@@ -173,14 +152,64 @@ int update(game* p_game)
 					selec->m_posX = p_game->m_mousePosX / 64;
 					selec->m_posY = p_game->m_mousePosY / 64;
 					selec->m_pm -= dist;
-					CalculateMovement(p_game->m_graph, selec);
 				}
 			}
 			selec->m_selected = 0;
 		}
 		else { //Aucune unité selectionnée
-			if (clickt && pID == p_game->m_playerTurn)
+			if (clickt && pID == p_game->m_playerTurn) {
 				clickt->m_selected = 1;
+				CalculateMovement(p_game->m_graph, clickt);
+
+				//Enlève toutes les cases ou se trouvent une unité
+				unit* currentUnit;
+				for (int c = 0; c < 2; c++)
+					for (int d = 0; d < p_game->m_players[c]->m_nbUnit; d++) {
+						currentUnit = p_game->m_players[c]->m_units[d];
+						clickt->m_walkGraph[currentUnit->m_posY * p_game->m_graph->m_sizeX + currentUnit->m_posX]->m_distance = INFINITY_DIST;
+
+						//Enlève toutes les cases qui n'ont pas une case accessible à coté
+					}
+
+				for (int c = 0; c < 2; c++)
+					for (int d = 0; d < p_game->m_players[c]->m_nbUnit; d++) {
+						currentUnit = p_game->m_players[c]->m_units[d];
+						int ind = currentUnit->m_posY * p_game->m_graph->m_sizeX + currentUnit->m_posX;
+						clickt->m_walkGraph[ind]->m_distance = INFINITY_DIST;
+
+						int indVois[4] = { ind + 1, ind - 1, ind + p_game->m_graph->m_sizeX, ind - p_game->m_graph->m_sizeX };
+
+						//Enlève toutes les cases qui n'ont pas une case accessible à coté
+						for (int a = 0; a < 4; a++)
+							verifDijkstra(p_game, clickt, indVois[a], ind);
+					}
+				
+				int err;
+				do {
+					err = 0;
+					for (int ind = 0; ind < p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY; ind++) {
+						if (clickt->m_walkGraph[ind]->m_distance != 1 && clickt->m_walkGraph[ind]->m_distance != INFINITY_DIST) {
+
+							int dist = INFINITY_DIST;
+							if (ind % p_game->m_graph->m_sizeX + 1 < p_game->m_graph->m_sizeX && clickt->m_walkGraph[ind + 1]->m_distance < dist)
+								dist = clickt->m_walkGraph[ind + 1]->m_distance;
+							if (ind % p_game->m_graph->m_sizeX - 1 >= 0 && clickt->m_walkGraph[ind - 1]->m_distance < dist)
+								dist = clickt->m_walkGraph[ind - 1]->m_distance;
+							if (ind + p_game->m_graph->m_sizeX < p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY && clickt->m_walkGraph[ind + p_game->m_graph->m_sizeX]->m_distance < dist)
+								dist = clickt->m_walkGraph[ind + p_game->m_graph->m_sizeX]->m_distance;
+							if (ind - p_game->m_graph->m_sizeX >= 0 && clickt->m_walkGraph[ind - p_game->m_graph->m_sizeX]->m_distance < dist)
+								dist = clickt->m_walkGraph[ind - p_game->m_graph->m_sizeX]->m_distance;
+
+							if (clickt->m_walkGraph[ind]->m_distance <= dist) {
+								if (clickt->m_walkGraph[ind]->m_distance <= clickt->m_pm) {
+									clickt->m_walkGraph[ind]->m_distance = INFINITY_DIST;
+									err++;
+								}
+							}
+						}
+					}
+				} while (err);
+			}
 		}
 
 

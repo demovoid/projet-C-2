@@ -1,19 +1,5 @@
 #include "game.h"
 
-
-
-void afficherDijkstra(dijkstraNode** d, graph* g) {
-	if (!d)
-		return;
-
-	for (int i = 0; i < g->m_sizeY; i++) {
-		for (int j = 0; j < g->m_sizeX; j++)
-			printf("%s%05d\x1b[0m ", d[i * g->m_sizeX + j]->m_distance == INFINITY_DIST ? "\033[0;31;40m" : (d[i * g->m_sizeX + j]->m_distance ? "" : "\033[0;32;40m"), d[i * g->m_sizeX + j]->m_distance);
-		printf("\n");
-	}
-}
-
-
 int LoadSprites(game* p_game, const char* p_path)
 {
 	char pathSprite[255];
@@ -317,6 +303,7 @@ unit* GetUnitFromPos(game* p_game, int p_posX, int p_posY, int* p_playerID)
 void CalculateMovement(graph* p_graph, unit* p_unit)
 {
 	p_unit->m_walkGraph = Dijkstra(p_graph, GetNodeFromPosition(p_graph, p_unit->m_posX, p_unit->m_posY), p_unit->m_type->m_layerMask);
+
 }
 
 void ResetPlayers(game* p_game)
