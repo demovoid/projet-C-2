@@ -203,13 +203,16 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	index = 0;
 
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
-	
 	SDL_Rect cases;
+	SDL_Surface* Rouge = SDL_LoadBMP("./data/fireLayer.bmp");
+	
+	
+
 	unit* sUnit = GetSelectedUnit(p_game);
 	sprite* sprit = NULL;
 	cases.w = 64;
 	cases.h = 64;
-	
+	SDL_SetAlpha(Rouge, SDL_SRCALPHA, 128);
 	if (sUnit)
 	{
 		if(sUnit->m_selected == 1)
@@ -236,14 +239,14 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 						if (dist <= 5 && dist >= 2) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
 						}
 					}
 					else {
 						if (dist == 1) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
 						}
 					}
 				}
@@ -270,6 +273,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 
 		SDL_BlitSurface(p_game->m_textP2, NULL, p_window, &dest);
 	}
+	SDL_FreeSurface(Rouge);
 }
 
 unit* GetSelectedUnit(game* p_game)
@@ -295,8 +299,6 @@ unit* GetUnitFromPos(game* p_game, int p_posX, int p_posY, int* p_playerID)
 	{
 		for (int j = 0; j < p_game->m_players[i]->m_nbUnit; j++)
 		{
-			/*printf("\nUnité[%d][%d].x = %d / ",i,j,p_game->m_players[i]->m_units[j]->m_posX*64);
-			printf("Unité[%d][%d].x = %d\n", i, j, p_game->m_players[i]->m_units[j]->m_posY*64);*/
 			if (p_game->m_players[i]->m_units[j]->m_hp > 0)
 			{
 				if (p_game->m_players[i]->m_units[j]->m_posX * 64 <= p_posX && p_posX <= (p_game->m_players[i]->m_units[j]->m_posX + 1) * 64)
@@ -343,7 +345,7 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 	int defense_hp = p_defender->m_hp;
 	D = (damage * attaquant_hp * 0.1 * (1 - groundDefense * (0.1 - 0.01 * (10 - defense_hp)))) / 10;
 	p_defender->m_hp -= (int)D;
-
+	p_attacker->m_canFire = 0;
 	//v�rification de mort
 	if (p_defender->m_hp <= 0) {
 		player* j = p_game->m_players[1-p_game->m_playerTurn];
