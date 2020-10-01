@@ -1,4 +1,5 @@
 ﻿  game.c
+<<<<<<< HEAD
 C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(266,23): warning C4018: '<': signed/unsigned mismatch
 C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(263,13): warning C4101: 'j': unreferenced local variable
   graph_SDL.c
@@ -35,3 +36,34 @@ SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' was not fou
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
   C:\Users\Demo\Desktop\projet c\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
   7 File(s) copied
+=======
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(318,23): warning C4018: '<' : incompatibilité signed/unsigned
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(315,13): warning C4101: 'j' : variable locale non référencée
+  AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libjpeg-8.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libmikmod-2.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libogg-0.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libpng15-15.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libtiff-5.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbis-0.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libvorbisfile-3.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libwebp-2.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_gfx.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_image.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_mixer.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\SDL_ttf.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\smpeg.dll
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\zlib1.dll
+         17 fichier(s) copié(s).
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_map.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player1.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\1_player2.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\fireLayer.bmp
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\sprites.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\unitType.ini
+  D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\data\walkLayer.bmp
+  7 fichier(s) copié(s)
+>>>>>>> martin

@@ -189,13 +189,16 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	index = 0;
 
 	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
-	
 	SDL_Rect cases;
+	SDL_Surface* Rouge = SDL_LoadBMP("./data/fireLayer.bmp");
+	
+	
+
 	unit* sUnit = GetSelectedUnit(p_game);
 	sprite* sprit = NULL;
 	cases.w = 64;
 	cases.h = 64;
-	
+	SDL_SetAlpha(Rouge, SDL_SRCALPHA, 128);
 	if (sUnit)
 	{
 		if(sUnit->m_selected == 1)
@@ -222,27 +225,61 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 						if (dist <= 5 && dist >= 2) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
 						}
 					}
 					else {
 						if (dist == 1) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(p_game->m_surfaceWalk, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
 						}
 					}
 				}
 		}
 	}
 	
+	char HP[6];
+	SDL_Surface* HPD;
+	SDL_Rect text;
+	SDL_Rect textf;
+	SDL_Surface* Fire;
+	char canfire;
+	HP[1] = ' ';
+	HP[2] = ' ';
+	HP[3] = 'H';
+	HP[4] = 'P';
+	HP[5] = '\0';
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
+			canfire = p_game->m_players[k]->m_units[l]->m_canFire;
+			if (p_game->m_players[k]->m_units[l]->m_hp == 10)
+			{
+				HP[0] = '1';
+				HP[1] = '0';
+			}
+			else
+			{
+				HP[0] = '0' + p_game->m_players[k]->m_units[l]->m_hp;
+				HP[1] = ' ';
+			}
+			if (!k) HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 255, 0, 0 });
+			else HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 0, 0, 255 }); 
+			Fire = TTF_RenderText_Blended(p_game->m_fontHP, "FIRE", (SDL_Color) { 255 * (!k) * canfire, 0, 255 * k * canfire});
+
+
+			text.x = p_game->m_players[k]->m_units[l]->m_posX * 64;
+			text.y = (p_game->m_players[k]->m_units[l]->m_posY+1) * 64 - 8;
+			textf.x = text.x;
+			textf.y = text.y + 16;
+			SDL_BlitSurface(HPD, NULL, p_window, &text);
+			SDL_BlitSurface(Fire, NULL, p_window, &textf);
 			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
 			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
 			DrawSprite(p_window, sprit);
 		}
 	} 
+	
 	
 
 	// Affichage du texte
@@ -256,6 +293,9 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 
 		SDL_BlitSurface(p_game->m_textP2, NULL, p_window, &dest);
 	}
+	SDL_FreeSurface(Rouge);
+	SDL_FreeSurface(HPD);
+	SDL_FreeSurface(Fire);
 }
 
 unit* GetSelectedUnit(game* p_game)
@@ -281,8 +321,6 @@ unit* GetUnitFromPos(game* p_game, int p_posX, int p_posY, int* p_playerID)
 	{
 		for (int j = 0; j < p_game->m_players[i]->m_nbUnit; j++)
 		{
-			/*printf("\nUnité[%d][%d].x = %d / ",i,j,p_game->m_players[i]->m_units[j]->m_posX*64);
-			printf("Unité[%d][%d].x = %d\n", i, j, p_game->m_players[i]->m_units[j]->m_posY*64);*/
 			if (p_game->m_players[i]->m_units[j]->m_hp > 0)
 			{
 				if (p_game->m_players[i]->m_units[j]->m_posX * 64 <= p_posX && p_posX <= (p_game->m_players[i]->m_units[j]->m_posX + 1) * 64)
@@ -330,7 +368,7 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 	int defense_hp = p_defender->m_hp;
 	D = (damage * attaquant_hp * 0.1 * (1 - groundDefense * (0.1 - 0.01 * (10 - defense_hp)))) / 10;
 	p_defender->m_hp -= (int)D;
-
+	p_attacker->m_canFire = 0;
 	//v�rification de mort
 	if (p_defender->m_hp <= 0) {
 		player* j = p_game->m_players[1-p_game->m_playerTurn];
@@ -338,7 +376,7 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 		for (i = 0; i < j->m_nbUnit && j->m_units[i] != p_defender; i++);
 
 		if (i != j->m_nbUnit) {
-			//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
+			FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
 			free(j->m_units[i]);
 			j->m_nbUnit--;
 			j->m_units[i] = j->m_units[j->m_nbUnit];

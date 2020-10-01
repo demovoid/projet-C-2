@@ -174,12 +174,14 @@ static void correctDijkstra(game* p_game, unit* clickt, int ind, int prev, int i
 
 int update(game* p_game)
 {
+	
 	if (p_game->m_lclic) //Sélectionner l'unité de son camp
 	{
 		int pID;
 		unit* selec = GetSelectedUnit(p_game);
 		unit* clickt = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &pID);
-
+		
+		
 		if (selec) { //On a une unité selectionnée
 			if(!clickt && selec->m_selected == 1) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en déplacement
 				int dist = selec->m_walkGraph[(p_game->m_mousePosX / 64) + (p_game->m_mousePosY / 64) * p_game->m_graph->m_sizeX]->m_distance;
@@ -261,24 +263,6 @@ int update(game* p_game)
 			}
 		}
 
-
-		/*int playerattaquantID=-1;
-		//TROUVER LA CASE DU JOUEUR PRESENT SELECTIONNEE
-		unit* attaquant = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerattaquantID);
-		unit* pastattaquant = GetSelectedUnit(p_game);
-		if (attaquant) 
-		{
-			if (!attaquant->m_selected)
-				attaquant->m_selected = 1;
-			else 
-				attaquant->m_selected = 0;	
-		}
-		if (pastattaquant)
-		{
-			pastattaquant->m_selected = 0;
-		}*/
-		
-		
 	}
 
 	if (p_game->m_rclic)
@@ -287,10 +271,11 @@ int update(game* p_game)
 		int pID, dist;
 		unit* selec = GetSelectedUnit(p_game);
 		unit* clickt = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &pID);
-
+		
 		if (selec) { //On a une unité selectionnée
 			if (clickt && selec->m_selected == 2) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en attaque
 				//omg j'attaque !
+				
 				if (selec->m_canFire) {
 					node* src = GetNodeFromPosition(p_game->m_graph, selec->m_posX, selec->m_posY);
 					node* dest = GetNodeFromPosition(p_game->m_graph, clickt->m_posX, clickt->m_posY);
