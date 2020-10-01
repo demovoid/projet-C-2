@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	game* g;
 
-	window = init("basecode", 1216, 768);
+	window = init("Advance Wars | Groupe 11", 1216, 768);
 	if (!window)
 		return EXIT_FAILURE;
 

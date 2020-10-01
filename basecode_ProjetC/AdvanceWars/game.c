@@ -240,10 +240,10 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	}
 	
 	char HP[6];
-	SDL_Surface* HPD;
+	SDL_Surface* HPD = NULL;
 	SDL_Rect text;
 	SDL_Rect textf;
-	SDL_Surface* Fire;
+	SDL_Surface* Fire = NULL;
 	char canfire;
 	HP[1] = ' ';
 	HP[2] = ' ';
