@@ -1,5 +1,5 @@
 #include "renderLoop.h"
-#include "include/graph.h"
+#include "graph.h"
 #include "unit.h"
 
 void afficherGraphByTID(graph* g) {
@@ -160,29 +160,14 @@ int interaction(SDL_Event* p_e, game* p_game)
 
 int update(game* p_game)
 {
-	char defHP[5];
-	char attHP[5];
-	SDL_Surface* DefenderHP;
-	SDL_Surface* AttackerHP;
+	
 	if (p_game->m_lclic) //Sélectionner l'unité de son camp
 	{
 		int pID;
 		unit* selec = GetSelectedUnit(p_game);
 		unit* clickt = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &pID);
-		if (selec->m_hp == 10)
-		{
-			attHP[0] = '1';
-			attHP[1] = '0';
-		}
-		else
-		{
-			attHP[0] = '0' + selec->m_hp;
-			attHP[1] = ' ';
-		}
-		attHP[2] = ' ';
-		attHP[3] = 'H';
-		attHP[4] = 'P';
-		AttackerHP = TTF_RenderText_Blended(p_game->m_fontHP, attHP, (SDL_Color) { 0, 0, 0 });
+		
+		
 		if (selec) { //On a une unité selectionnée
 			if(!clickt && selec->m_selected == 1) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en déplacement
 				int dist = selec->m_walkGraph[(p_game->m_mousePosX / 64) + (p_game->m_mousePosY / 64) * p_game->m_graph->m_sizeX]->m_distance;
@@ -212,20 +197,7 @@ int update(game* p_game)
 		if (selec) { //On a une unité selectionnée
 			if (clickt && selec->m_selected == 2) { //J'ai une unité selectionnée et la case choisie est vide et que l'unité est selectionnée en attaque
 				//omg j'attaque !
-				if (clickt->m_hp == 10)
-				{
-					defHP[0] = '1';
-					defHP[1] = '0';
-				}
-				else
-				{
-					defHP[0] = '0' + selec->m_hp;
-					defHP[1] = ' ';
-				}
-				defHP[2] = ' ';
-				defHP[3] = 'H';
-				defHP[4] = 'P';
-				DefenderHP = TTF_RenderText_Blended(p_game->m_fontHP, attHP, (SDL_Color) { 0, 0, 0 });
+				
 				if (selec->m_canFire) {
 					node* src = GetNodeFromPosition(p_game->m_graph, selec->m_posX, selec->m_posY);
 					node* dest = GetNodeFromPosition(p_game->m_graph, clickt->m_posX, clickt->m_posY);

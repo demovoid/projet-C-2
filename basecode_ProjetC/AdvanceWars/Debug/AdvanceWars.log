@@ -1,14 +1,6 @@
 ﻿  game.c
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(282,23): warning C4018: '<' : incompatibilité signed/unsigned
-D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(279,13): warning C4101: 'j' : variable locale non référencée
-  graph_SDL.c
-  main.c
-  renderLoop.c
-  sprite.c
-  unit.c
-  Génération de code en cours...
-MSVCRTD.lib(initializers.obj) : warning LNK4098: conflit entre la bibliothèque par défaut 'msvcrt.lib' et les autres bibliothèques ; utilisez /NODEFAULTLIB:library
-SDLmain.lib(SDL_win32_main.obj) : warning LNK4099: PDB 'SDLmain.pdb' n'a pu être trouvé avec 'SDLmain.lib(SDL_win32_main.obj)' ou sur 'D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\SDLmain.pdb' ; l'objet sera lié sans informations de débogage
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(318,23): warning C4018: '<' : incompatibilité signed/unsigned
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(315,13): warning C4101: 'j' : variable locale non référencée
   AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll

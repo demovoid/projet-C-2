@@ -253,13 +253,47 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 		}
 	}
 	
+	char HP[6];
+	SDL_Surface* HPD;
+	SDL_Rect text;
+	SDL_Rect textf;
+	SDL_Surface* Fire;
+	char canfire;
+	HP[1] = ' ';
+	HP[2] = ' ';
+	HP[3] = 'H';
+	HP[4] = 'P';
+	HP[5] = '\0';
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
+			canfire = p_game->m_players[k]->m_units[l]->m_canFire;
+			if (p_game->m_players[k]->m_units[l]->m_hp == 10)
+			{
+				HP[0] = '1';
+				HP[1] = '0';
+			}
+			else
+			{
+				HP[0] = '0' + p_game->m_players[k]->m_units[l]->m_hp;
+				HP[1] = ' ';
+			}
+			if (!k) HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 255, 0, 0 });
+			else HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 0, 0, 255 }); 
+			Fire = TTF_RenderText_Blended(p_game->m_fontHP, "FIRE", (SDL_Color) { 255 * (!k) * canfire, 0, 255 * k * canfire});
+
+
+			text.x = p_game->m_players[k]->m_units[l]->m_posX * 64;
+			text.y = (p_game->m_players[k]->m_units[l]->m_posY+1) * 64 - 8;
+			textf.x = text.x;
+			textf.y = text.y + 16;
+			SDL_BlitSurface(HPD, NULL, p_window, &text);
+			SDL_BlitSurface(Fire, NULL, p_window, &textf);
 			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
 			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
 			DrawSprite(p_window, sprit);
 		}
 	} 
+	
 	
 
 	// Affichage du texte
@@ -274,6 +308,8 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 		SDL_BlitSurface(p_game->m_textP2, NULL, p_window, &dest);
 	}
 	SDL_FreeSurface(Rouge);
+	SDL_FreeSurface(HPD);
+	SDL_FreeSurface(Fire);
 }
 
 unit* GetSelectedUnit(game* p_game)
@@ -353,7 +389,7 @@ void Atttack(game* p_game, unit* p_attacker, unit* p_defender)
 		for (i = 0; i < j->m_nbUnit && j->m_units[i] != p_defender; i++);
 
 		if (i != j->m_nbUnit) {
-			//FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
+			FreeDijkstra(j->m_units[i]->m_walkGraph, p_game->m_graph->m_sizeX* p_game->m_graph->m_sizeY);
 			free(j->m_units[i]);
 			j->m_nbUnit--;
 			j->m_units[i] = j->m_units[j->m_nbUnit];
