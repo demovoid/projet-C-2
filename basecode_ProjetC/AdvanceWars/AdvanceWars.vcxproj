@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>../SDL-1.2.15/lib/$(Platform)/*.lib;./include/graphManager.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>../SDL-1.2.15/lib/$(Platform)/*.lib;./Project1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)SDL-1.2.15\bin\Win32\*.dll" "$(SolutionDir)bin\"

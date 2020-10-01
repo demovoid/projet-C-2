@@ -1,6 +1,17 @@
 #include "renderLoop.h"
-#include "include/graph.h"
+#include "graph.h"
 #include "unit.h"
+
+static void afficherDijkstra(dijkstraNode** d, graph* g) {
+	if (!d)
+		return;
+
+	for (int i = 0; i < g->m_sizeY; i++) {
+		for (int j = 0; j < g->m_sizeX; j++)
+			printf("%s%05d\x1b[0m ", d[i * g->m_sizeX + j]->m_distance == INFINITY_DIST ? "\033[0;31;40m" : (d[i * g->m_sizeX + j]->m_distance ? "" : "\033[0;32;40m"), d[i * g->m_sizeX + j]->m_distance);
+		printf("\n");
+	}
+}
 
 SDL_Surface* init(char* p_windowName, int p_resX, int p_resY)
 {
@@ -137,6 +148,30 @@ static void verifDijkstra(game* p_game, unit* clickt, int ind, int prev) {
 		verifDijkstra(p_game, clickt, ind - p_game->m_graph->m_sizeX, ind);
 }
 
+static void correctDijkstra(game* p_game, unit* clickt, int ind, int prev, int inc) {
+	if (ind == prev) {
+		correctDijkstra(p_game, clickt, ind + 1, ind, clickt->m_walkGraph[ind]->m_distance + 1);
+		correctDijkstra(p_game, clickt, ind - 1, ind, clickt->m_walkGraph[ind]->m_distance + 1);
+		correctDijkstra(p_game, clickt, ind + p_game->m_graph->m_sizeX, ind, clickt->m_walkGraph[ind]->m_distance + 1);
+		correctDijkstra(p_game, clickt, ind - p_game->m_graph->m_sizeX, ind, clickt->m_walkGraph[ind]->m_distance + 1);
+	}
+	else {
+		if (ind < 0 || ind >= p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY || clickt->m_walkGraph[ind]->m_distance == INFINITY_DIST || clickt->m_walkGraph[ind]->m_distance < inc)
+			return;
+
+		clickt->m_walkGraph[ind]->m_distance = inc;
+
+		if (ind + 1 != prev)
+			correctDijkstra(p_game, clickt, ind + 1, ind, inc + 1);
+		if (ind - 1 != prev)
+			correctDijkstra(p_game, clickt, ind - 1, ind, inc + 1);
+		if (ind + p_game->m_graph->m_sizeX != prev)
+			correctDijkstra(p_game, clickt, ind + p_game->m_graph->m_sizeX, ind, inc + 1);
+		if (ind - p_game->m_graph->m_sizeX != prev)
+			correctDijkstra(p_game, clickt, ind - p_game->m_graph->m_sizeX, ind, inc + 1);
+	}
+}
+
 int update(game* p_game)
 {
 	if (p_game->m_lclic) //Sélectionner l'unité de son camp
@@ -163,14 +198,6 @@ int update(game* p_game)
 
 				//Enlève toutes les cases ou se trouvent une unité
 				unit* currentUnit;
-				for (int c = 0; c < 2; c++)
-					for (int d = 0; d < p_game->m_players[c]->m_nbUnit; d++) {
-						currentUnit = p_game->m_players[c]->m_units[d];
-						clickt->m_walkGraph[currentUnit->m_posY * p_game->m_graph->m_sizeX + currentUnit->m_posX]->m_distance = INFINITY_DIST;
-
-						//Enlève toutes les cases qui n'ont pas une case accessible à coté
-					}
-
 				for (int c = 0; c < 2; c++)
 					for (int d = 0; d < p_game->m_players[c]->m_nbUnit; d++) {
 						currentUnit = p_game->m_players[c]->m_units[d];
@@ -202,13 +229,35 @@ int update(game* p_game)
 
 							if (clickt->m_walkGraph[ind]->m_distance <= dist) {
 								if (clickt->m_walkGraph[ind]->m_distance <= clickt->m_pm) {
-									clickt->m_walkGraph[ind]->m_distance = INFINITY_DIST;
+									clickt->m_walkGraph[ind]->m_distance = INFINITY_DIST - 1;
 									err++;
 								}
 							}
 						}
 					}
 				} while (err);
+
+				int lim = -1;
+				for (int ind = 0; ind < p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY; ind++) {
+					if (clickt->m_walkGraph[ind]->m_distance < INFINITY_DIST - 1) {
+
+						int found = 0;
+						if (ind % p_game->m_graph->m_sizeX + 1 < p_game->m_graph->m_sizeX && clickt->m_walkGraph[ind + 1]->m_distance == INFINITY_DIST - 1)
+							found = 1;
+						if (ind % p_game->m_graph->m_sizeX - 1 >= 0 && clickt->m_walkGraph[ind - 1]->m_distance == INFINITY_DIST - 1)
+							found = 1;
+						if (ind + p_game->m_graph->m_sizeX < p_game->m_graph->m_sizeX * p_game->m_graph->m_sizeY && clickt->m_walkGraph[ind + p_game->m_graph->m_sizeX]->m_distance == INFINITY_DIST - 1)
+							found = 1;
+						if (ind - p_game->m_graph->m_sizeX >= 0 && clickt->m_walkGraph[ind - p_game->m_graph->m_sizeX]->m_distance == INFINITY_DIST - 1)
+							found = 1;
+
+						if (found && (lim < 0 || clickt->m_walkGraph[ind]->m_distance < clickt->m_walkGraph[lim]->m_distance))
+							lim = ind;
+
+					}
+				}
+				if(lim >= 0)
+					correctDijkstra(p_game, clickt, lim, lim, 0);
 			}
 		}
 
