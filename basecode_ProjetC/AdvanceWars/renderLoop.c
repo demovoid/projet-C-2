@@ -2,17 +2,6 @@
 #include "graph.h"
 #include "unit.h"
 
-static void afficherDijkstra(dijkstraNode** d, graph* g) {
-	if (!d)
-		return;
-
-	for (int i = 0; i < g->m_sizeY; i++) {
-		for (int j = 0; j < g->m_sizeX; j++)
-			printf("%s%05d\x1b[0m ", d[i * g->m_sizeX + j]->m_distance == INFINITY_DIST ? "\033[0;31;40m" : (d[i * g->m_sizeX + j]->m_distance ? "" : "\033[0;32;40m"), d[i * g->m_sizeX + j]->m_distance);
-		printf("\n");
-	}
-}
-
 SDL_Surface* init(char* p_windowName, int p_resX, int p_resY)
 {
 	SDL_Surface* window;
@@ -300,67 +289,6 @@ int update(game* p_game)
 			if (clickt && pID == p_game->m_playerTurn) 
 				clickt->m_selected = 2;
 		}
-
-		/*int playerdefenseID = -1;
-		unit* defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
-		unit* attaquant = GetSelectedUnit(p_game);
-		int dtmp = 0;
-		node* cdefense = NULL;
-		node* cattaque = NULL;
-		node* current = NULL;
-		if(defense) cdefense = GetNodeFromPosition(p_game->m_graph, defense->m_posX, defense->m_posY);
-		if(attaquant) cattaque = GetNodeFromPosition(p_game->m_graph, attaquant->m_posX, attaquant->m_posY);
-		current = GetNodeFromPosition(p_game->m_graph, p_game->m_mousePosX/64, p_game->m_mousePosY/64);
-		if (attaquant) {
-			if (defense &&  playerdefenseID != p_game->m_playerTurn) //Attaque
-			{
-				//ARTILLERIE (ROCKET LAUNCHER) 2 a 5 cases
-				//RESTE CASE ADJACENTE
-				if (attaquant->m_canFire) {
-					if (attaquant->m_type == ROCKET_LAUNCHER)
-					{
-						dtmp = GetManhattanDistance(cdefense, cattaque);
-						if (dtmp <= 5 && dtmp >= 2)
-						{
-							Atttack(p_game, attaquant, defense);
-							attaquant->m_canFire = 0;
-						}
-					}
-					else
-					{
-						dtmp = GetManhattanDistance(cdefense, cattaque);
-						if (dtmp == 1)
-						{
-							Atttack(p_game, attaquant, defense);
-							attaquant->m_canFire = 0;
-						}
-					}
-				}
-
-			}
-			else //Deplacement 
-			{
-				/*afficherGraphByID(p_game->m_graph);
-				afficherGraphByTID(p_game->m_graph);*/
-			/*	defense = GetUnitFromPos(p_game, p_game->m_mousePosX, p_game->m_mousePosY, &playerdefenseID);
-				if (!defense)
-				{
-					dtmp = attaquant->m_walkGraph[(p_game->m_mousePosX / 64) + (p_game->m_mousePosY / 64) * p_game->m_graph->m_sizeX]->m_distance;
-
-					if (dtmp <= attaquant->m_pm)
-					{
-						attaquant->m_posX = p_game->m_mousePosX / 64;
-						attaquant->m_posY = p_game->m_mousePosY / 64;
-						attaquant->m_pm -= dtmp;
-						CalculateMovement(p_game->m_graph, attaquant);
-						attaquant->m_selected = 0;
-					}
-				}
-				else
-					printf("Deplacement impossible");
-			}
-		}*/
-		
 	}
 
 	return 0;

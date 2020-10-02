@@ -188,12 +188,9 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	}
 	index = 0;
 
-	// TODO :	Affichage des cases semi-transparentes pour indiquer la possibilit� de marcher
+	//Affichage des cases pour tirer/bouger
 	SDL_Rect cases;
 	SDL_Surface* Rouge = SDL_LoadBMP("./data/fireLayer.bmp");
-	
-	
-
 	unit* sUnit = GetSelectedUnit(p_game);
 	sprite* sprit = NULL;
 	cases.w = 64;
@@ -201,7 +198,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	SDL_SetAlpha(Rouge, SDL_SRCALPHA, 128);
 	if (sUnit)
 	{
-		if(sUnit->m_selected == 1)
+		if(sUnit->m_selected == 1) //Cases pour bouger
 			for (j = 0; j < p_game->m_graph->m_sizeY; j++)
 			{
 				for (i = 0; i < p_game->m_graph->m_sizeX; i++)
@@ -213,7 +210,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 					}
 				}
 			}
-		else {
+		else { //Cases pour tirer
 			int dist;
 			node *src, *dest;
 			for (int i = 0; i < p_game->m_graph->m_sizeY; i++)
@@ -225,25 +222,24 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 						if (dist <= 5 && dist >= 2) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); 
 						}
 					}
 					else {
 						if (dist == 1) {
 							cases.x = j * 64;
 							cases.y = i * 64;
-							SDL_BlitSurface(Rouge, NULL, p_window, &cases); //afficher case rouge olala
+							SDL_BlitSurface(Rouge, NULL, p_window, &cases); 
 						}
 					}
 				}
 		}
 	}
-	
 	char HP[6];
 	SDL_Surface* HPD = NULL;
+	SDL_Surface* Fire = NULL;
 	SDL_Rect text;
 	SDL_Rect textf;
-	SDL_Surface* Fire = NULL;
 	char canfire;
 	HP[1] = ' ';
 	HP[2] = ' ';
@@ -252,6 +248,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 	HP[5] = '\0';
 	for (k = 0; k < 2; k++){
 		for (l = 0; l < p_game->m_players[k]->m_nbUnit; l++){
+			
 			canfire = p_game->m_players[k]->m_units[l]->m_canFire;
 			if (p_game->m_players[k]->m_units[l]->m_hp == 10)
 			{
@@ -265,9 +262,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			}
 			if (!k) HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 255, 0, 0 });
 			else HPD = TTF_RenderText_Blended(p_game->m_fontHP, HP, (SDL_Color) { 0, 0, 255 }); 
-			Fire = TTF_RenderText_Blended(p_game->m_fontHP, "FIRE", (SDL_Color) { 255 * (!k) * canfire, 0, 255 * k * canfire});
-
-
+			Fire = TTF_RenderText_Blended(p_game->m_fontHP, "FIRE", (SDL_Color) { 255 * (!k) * canfire, 0, 255 * k * canfire });
 			text.x = p_game->m_players[k]->m_units[l]->m_posX * 64;
 			text.y = (p_game->m_players[k]->m_units[l]->m_posY+1) * 64 - 8;
 			textf.x = text.x;
@@ -277,11 +272,10 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 			sprit = p_game->m_players[k]->m_units[l]->m_type->m_sprite[k];
 			MoveSprite(sprit, p_game->m_players[k]->m_units[l]->m_posX*64, p_game->m_players[k]->m_units[l]->m_posY*64);
 			DrawSprite(p_window, sprit);
+			SDL_FreeSurface(HPD);
+			SDL_FreeSurface(Fire);
 		}
 	} 
-	
-	
-
 	// Affichage du texte
 	if(p_game->m_playerTurn == 0)
 		SDL_BlitSurface(p_game->m_textP1, NULL, p_window, NULL);
@@ -294,8 +288,7 @@ void DrawGame(SDL_Surface* p_window, game* p_game)
 		SDL_BlitSurface(p_game->m_textP2, NULL, p_window, &dest);
 	}
 	SDL_FreeSurface(Rouge);
-	SDL_FreeSurface(HPD);
-	SDL_FreeSurface(Fire);
+	
 }
 
 unit* GetSelectedUnit(game* p_game)

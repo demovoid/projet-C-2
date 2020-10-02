@@ -1,4 +1,6 @@
-﻿  main.c
+﻿  game.c
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(308,23): warning C4018: '<' : incompatibilité signed/unsigned
+D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\AdvanceWars\game.c(305,13): warning C4101: 'j' : variable locale non référencée
   AdvanceWars.vcxproj -> D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\bin\AdvanceWars_d.exe
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libFLAC-8.dll
   D:\Bureau\Scolaire\ESIEA\3A\Projet C\Projet-c 2\projet-C-2\basecode_ProjetC\SDL-1.2.15\bin\Win32\libfreetype-6.dll
